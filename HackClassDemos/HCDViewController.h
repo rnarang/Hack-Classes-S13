@@ -10,10 +10,13 @@
 
 @interface HCDViewController : UIViewController
 
+// Connection to the score label in HCDViewController.xib
 @property (nonatomic, weak) IBOutlet UILabel *scoreLabel;
 
+// Connection to the mole button in HCDViewController.xib
 @property (nonatomic, weak) IBOutlet UIButton *moleButton;
 
+// Method called when the mole button is tapped
 - (IBAction)moleHit:(id)sender;
 
 @end
