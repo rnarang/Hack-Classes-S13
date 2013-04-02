@@ -7,19 +7,36 @@
 //
 
 #import "HCDAppDelegate.h"
-
 #import "HCDViewController.h"
+#import "HCDHighScoresViewController.h"
 
 @implementation HCDAppDelegate
 
+@synthesize window = _window;
+@synthesize tabBarController = _tabBarController;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-  self.viewController = [[HCDViewController alloc] initWithNibName:@"HCDViewController" bundle:nil];
-  self.window.rootViewController = self.viewController;
-    [self.window makeKeyAndVisible];
-    return YES;
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  // Override point for customization after application launch.
+  self.tabBarController = [[UITabBarController alloc] init];
+  
+  // Create the main game view controller
+  HCDViewController *firstViewController = [[HCDViewController alloc] initWithNibName:@"HCDViewController" bundle:nil];
+  firstViewController.title = @"Whack-A-Mole";
+  
+  // Create the high scores view controller
+  HCDHighScoresViewController *secondViewController = [[HCDHighScoresViewController alloc] initWithNibName:@"HCDHighScoresViewController" bundle:nil];
+  secondViewController.title = @"High Scores";
+  
+  // Give the tab bar controller the view controllers
+  NSArray *viewControllers = [NSArray arrayWithObjects:firstViewController, secondViewController, nil];
+  
+  self.tabBarController.viewControllers = viewControllers;
+  
+  self.window.rootViewController = self.tabBarController;
+  [self.window makeKeyAndVisible];
+  return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

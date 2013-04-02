@@ -14,6 +14,12 @@
 // declaration of the user's score
 @property (nonatomic, assign) int score;
 
+@property (nonatomic, assign) int secondsLeft;
+
+@property (nonatomic, strong) NSTimer *moleTimer;
+
+@property (nonatomic, strong) NSTimer *clockTimer;
+
 // Moves the mole to a random location on the screen
 - (void)moveMole;
 
@@ -25,7 +31,11 @@
 // they exist. We need to synthesize the properties, which will actually
 // create the getters and setters.
 @synthesize scoreLabel = _scoreLabel;
+@synthesize timeLabel = _timeLabel;
 @synthesize moleButton = _moleButton;
+@synthesize secondsLeft = _secondsLeft;
+@synthesize moleTimer = _moleTimer;
+@synthesize clockTimer = _clockTimer;
 @synthesize score = _score; // Obj-C specific advantage: automatically defaults to 0
 // For the more curious: the reason we do 'variable = _variable' is twofold. For
 // one, it differentiates between the public method declarations and the actual
@@ -49,8 +59,13 @@
   [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
   
-  // Every 1 second, call [self moveMole].
-  [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(moveMole) userInfo:nil repeats:YES];
+  // Every 0.6 seconds, call [self moveMole].
+  _moleTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(moveMole) userInfo:nil repeats:YES];
+ 
+  // Every 1 second, call [self decrementTimer].
+  _clockTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(decrementTimer) userInfo:nil repeats:YES];
+  
+  _secondsLeft = 10;
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,6 +99,26 @@
   [_moleButton setFrame:frame];
 }
 
+- (void)decrementTimer
+{
+  _secondsLeft--;
+  
+  NSString *timeLeftText = [NSString stringWithFormat:@"Time left: %d", _secondsLeft];
+  [_timeLabel setText:timeLeftText];
+  
+  if (_secondsLeft == 0) {
+    [_moleTimer invalidate];
+    [_clockTimer invalidate];
+    [_moleButton setHidden:YES];
+  }
+}
 
 @end
+
+
+
+
+
+
+
 

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B327424170A68B400CAC2EA /* HCDHighScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B327422170A68B400CAC2EA /* HCDHighScoresViewController.m */; };
+		5B327425170A68B400CAC2EA /* HCDHighScoresViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B327423170A68B400CAC2EA /* HCDHighScoresViewController.xib */; };
 		5BC4D9C117015D8A0003D417 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC4D9C017015D8A0003D417 /* UIKit.framework */; };
 		5BC4D9C317015D8A0003D417 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC4D9C217015D8A0003D417 /* Foundation.framework */; };
 		5BC4D9C517015D8A0003D417 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC4D9C417015D8A0003D417 /* CoreGraphics.framework */; };
@@ -22,6 +24,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B327421170A68B400CAC2EA /* HCDHighScoresViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCDHighScoresViewController.h; sourceTree = "<group>"; };
+		5B327422170A68B400CAC2EA /* HCDHighScoresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCDHighScoresViewController.m; sourceTree = "<group>"; };
+		5B327423170A68B400CAC2EA /* HCDHighScoresViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HCDHighScoresViewController.xib; sourceTree = "<group>"; };
 		5BC4D9BD17015D8A0003D417 /* HackClassDemos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HackClassDemos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BC4D9C017015D8A0003D417 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5BC4D9C217015D8A0003D417 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -90,6 +95,9 @@
 				5BC4D9D817015D8A0003D417 /* HCDViewController.h */,
 				5BC4D9D917015D8A0003D417 /* HCDViewController.m */,
 				5BC4D9DB17015D8A0003D417 /* HCDViewController.xib */,
+				5B327421170A68B400CAC2EA /* HCDHighScoresViewController.h */,
+				5B327422170A68B400CAC2EA /* HCDHighScoresViewController.m */,
+				5B327423170A68B400CAC2EA /* HCDHighScoresViewController.xib */,
 				5BC4D9E317015E4B0003D417 /* WhackAMole1.jpeg */,
 				5BC4D9C717015D8A0003D417 /* Supporting Files */,
 			);
@@ -168,6 +176,7 @@
 				5BC4D9D717015D8A0003D417 /* Default-568h@2x.png in Resources */,
 				5BC4D9DD17015D8A0003D417 /* HCDViewController.xib in Resources */,
 				5BC4D9E417015E4B0003D417 /* WhackAMole1.jpeg in Resources */,
+				5B327425170A68B400CAC2EA /* HCDHighScoresViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,6 +190,7 @@
 				5BC4D9CD17015D8A0003D417 /* main.m in Sources */,
 				5BC4D9D117015D8A0003D417 /* HCDAppDelegate.m in Sources */,
 				5BC4D9DA17015D8A0003D417 /* HCDViewController.m in Sources */,
+				5B327424170A68B400CAC2EA /* HCDHighScoresViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +313,7 @@
 				5BC4D9E217015D8A0003D417 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
