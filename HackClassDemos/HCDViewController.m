@@ -14,14 +14,29 @@
 // declaration of the user's score
 @property (nonatomic, assign) int score;
 
+// Number of seconds left before game over
 @property (nonatomic, assign) int secondsLeft;
 
+// Reference to the timer that handles moving the mole
 @property (nonatomic, strong) NSTimer *moleTimer;
 
+// Reference to the timer that handles changing the label for the number of seconds left
 @property (nonatomic, strong) NSTimer *clockTimer;
 
 // Moves the mole to a random location on the screen
 - (void)moveMole;
+
+// Decrements the number of seconds left and updates the label
+- (void)decrementTimer;
+
+// Reset the score, timers, labels, etc.
+- (void)initializeGameState;
+
+// Update the timer label
+- (void)updateTimerLabel:(int)secondsLeft;
+
+// Update the score label
+- (void)updateScoreLabel:(int)score;
 
 @end
 
@@ -59,14 +74,7 @@
   [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
   
-  // Every 0.6 seconds, call [self moveMole].
-  _moleTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(moveMole) userInfo:nil repeats:YES];
-  _moleTimer = [NSTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(moveMole) userInfo:nil repeats:YES];
- 
-  // Every 1 second, call [self decrementTimer].
-  _clockTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(decrementTimer) userInfo:nil repeats:YES];
-  
-  _secondsLeft = 10;
+  [self initializeGameState];
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,8 +89,7 @@
   _score++;
   
   // Change the score label to reflect that the mole has been hit
-  NSString *newScoreString = [NSString stringWithFormat:@"Score: %d", _score];
-  [_scoreLabel setText:newScoreString];
+  [self updateScoreLabel:_score];
 }
 
 - (void)moveMole
@@ -102,11 +109,14 @@
 
 - (void)decrementTimer
 {
+  // Decrement the number of seconds left
   _secondsLeft--;
   
-  NSString *timeLeftText = [NSString stringWithFormat:@"Time left: %d", _secondsLeft];
-  [_timeLabel setText:timeLeftText];
+  // Update the timer label
+  [self updateTimerLabel:_secondsLeft];
   
+  // If the game is over, invalidate the timers to stop the calls to decrementTimer
+  // and moveMole, and hide the button.
   if (_secondsLeft == 0) {
     [_moleTimer invalidate];
     [_clockTimer invalidate];
@@ -114,7 +124,7 @@
   }
 }
 
-- (IBAction)resetTapped:(id)sender
+- (void)initializeGameState
 {
   [_moleTimer invalidate];
   [_clockTimer invalidate];
@@ -128,13 +138,27 @@
   _secondsLeft = 10;
   _score = 0;
   
-  NSString *timeLeftText = [NSString stringWithFormat:@"Time left: %d", _secondsLeft];
-  [_timeLabel setText:timeLeftText];
-  
-  NSString *newScoreString = [NSString stringWithFormat:@"Score: %d", _score];
-  [_scoreLabel setText:newScoreString];
-
   [_moleButton setHidden:NO];
+  
+  [self updateScoreLabel:_score];
+  [self updateTimerLabel:_secondsLeft];
+}
+
+- (void)updateTimerLabel:(int)secondsLeft
+{
+  NSString *timeLeftText = [NSString stringWithFormat:@"Time left: %d", secondsLeft];
+  [_timeLabel setText:timeLeftText];
+}
+
+- (void)updateScoreLabel:(int)score
+{
+  NSString *newScoreString = [NSString stringWithFormat:@"Score: %d", score];
+  [_scoreLabel setText:newScoreString];
+}
+
+- (IBAction)resetTapped:(id)sender
+{
+  [self initializeGameState];
 }
 
 @end

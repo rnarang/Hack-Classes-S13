@@ -13,11 +13,11 @@
 // Connection to the score label in HCDViewController.xib
 @property (nonatomic, weak) IBOutlet UILabel *scoreLabel;
 
-// Connection to the time remaining button in the xib file
-@property (nonatomic, weak) IBOutlet UILabel *timeLabel;
-
 // Connection to the mole button in HCDViewController.xib
 @property (nonatomic, weak) IBOutlet UIButton *moleButton;
+
+// Connection to the time remaining button in the xib file
+@property (nonatomic, weak) IBOutlet UILabel *timeLabel;
 
 // Method called when the mole button is tapped
 - (IBAction)moleHit:(id)sender;
