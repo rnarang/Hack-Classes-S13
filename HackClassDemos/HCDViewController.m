@@ -61,6 +61,7 @@
   
   // Every 0.6 seconds, call [self moveMole].
   _moleTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(moveMole) userInfo:nil repeats:YES];
+  _moleTimer = [NSTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(moveMole) userInfo:nil repeats:YES];
  
   // Every 1 second, call [self decrementTimer].
   _clockTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(decrementTimer) userInfo:nil repeats:YES];
@@ -111,6 +112,29 @@
     [_clockTimer invalidate];
     [_moleButton setHidden:YES];
   }
+}
+
+- (IBAction)resetTapped:(id)sender
+{
+  [_moleTimer invalidate];
+  [_clockTimer invalidate];
+  
+  // Every 0.6 seconds, call [self moveMole].
+  _moleTimer = [NSTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(moveMole) userInfo:nil repeats:YES];
+  
+  // Every 1 second, call [self decrementTimer].
+  _clockTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(decrementTimer) userInfo:nil repeats:YES];
+  
+  _secondsLeft = 10;
+  _score = 0;
+  
+  NSString *timeLeftText = [NSString stringWithFormat:@"Time left: %d", _secondsLeft];
+  [_timeLabel setText:timeLeftText];
+  
+  NSString *newScoreString = [NSString stringWithFormat:@"Score: %d", _score];
+  [_scoreLabel setText:newScoreString];
+
+  [_moleButton setHidden:NO];
 }
 
 @end

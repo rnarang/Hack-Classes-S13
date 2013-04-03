@@ -22,4 +22,7 @@
 // Method called when the mole button is tapped
 - (IBAction)moleHit:(id)sender;
 
+// Method called when the reset button is tapped
+- (IBAction)resetTapped:(id)sender;
+
 @end
