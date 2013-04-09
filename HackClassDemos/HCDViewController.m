@@ -40,6 +40,7 @@ NSString *const kHCDHighScoresArrayKey = @"kHCDHighScoresArrayKey";
 // Update the score label
 - (void)updateScoreLabel:(int)score;
 
+// Update the high scores list in NSUserDefaults
 - (void)updateHighScoresWithScore:(int)score;
 
 @end

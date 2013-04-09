@@ -62,7 +62,7 @@
   NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
   NSArray *highScores = [standardDefaults objectForKey:kHCDHighScoresArrayKey];
   
-  return [highScores count];
+  return [highScores count]; // The number of elements in the high scores array in NSUserDefaults
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -76,7 +76,7 @@
   // Configure the cell...
   NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
   NSArray *highScores = [standardDefaults objectForKey:kHCDHighScoresArrayKey];
-  NSNumber *scoreObj = [highScores objectAtIndex:indexPath.row];
+  NSNumber *scoreObj = [highScores objectAtIndex:indexPath.row]; // Scores are stored as NSNumbers, which are wrappers for primitive types
   int score = [scoreObj intValue];
   
   NSString *cellText = [NSString stringWithFormat:@"%d", score];

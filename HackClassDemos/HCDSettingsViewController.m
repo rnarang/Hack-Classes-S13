@@ -31,6 +31,8 @@ NSString *const kHCDNameKey = @"kHCDNameKey";
 {
   [super viewDidLoad];
   // Do any additional setup after loading the view from its nib.
+  
+  // Set the name in the text field to whatever name is saved in NSUserDefaults
   NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
   NSString *name = [standardDefaults objectForKey:kHCDNameKey];
   [_nameTextField setText:name];
@@ -40,6 +42,7 @@ NSString *const kHCDNameKey = @"kHCDNameKey";
 {
   [super viewWillDisappear:animated];
   
+  // When leaving the view, save the text field. Alternatively, this could be done in textFieldShouldReturn.
   NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
   [standardDefaults setObject:_nameTextField.text forKey:kHCDNameKey];
 }
@@ -52,6 +55,7 @@ NSString *const kHCDNameKey = @"kHCDNameKey";
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+  // When the user hits return, dismiss the keyboard.
   [textField resignFirstResponder];
   return YES;
 }
