@@ -9,6 +9,7 @@
 #import "HCDAppDelegate.h"
 #import "HCDViewController.h"
 #import "HCDHighScoresViewController.h"
+#import "HCDSettingsViewController.h"
 
 @implementation HCDAppDelegate
 
@@ -29,8 +30,12 @@
   HCDHighScoresViewController *secondViewController = [[HCDHighScoresViewController alloc] initWithNibName:@"HCDHighScoresViewController" bundle:nil];
   secondViewController.title = @"High Scores";
   
+  // Create the settings view controller
+  HCDSettingsViewController *settingsViewController = [[HCDSettingsViewController alloc] initWithNibName:@"HCDSettingsViewController" bundle:nil];
+  settingsViewController.title = @"Settings";
+  
   // Give the tab bar controller the view controllers
-  NSArray *viewControllers = [NSArray arrayWithObjects:firstViewController, secondViewController, nil];
+  NSArray *viewControllers = [NSArray arrayWithObjects:firstViewController, secondViewController, settingsViewController, nil];
   
   self.tabBarController.viewControllers = viewControllers;
   

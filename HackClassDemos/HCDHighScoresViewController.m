@@ -7,6 +7,7 @@
 //
 
 #import "HCDHighScoresViewController.h"
+#import "HCDViewController.h"
 
 @interface HCDHighScoresViewController ()
 
@@ -34,6 +35,13 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  
+  [self.tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -44,29 +52,37 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+  // Return the number of rows in the section.
+  NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+  NSArray *highScores = [standardDefaults objectForKey:kHCDHighScoresArrayKey];
+  
+  return [highScores count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    
-    // Configure the cell...
-    
-    return cell;
+  static NSString *CellIdentifier = @"Cell";
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+  if (cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+  }
+  
+  // Configure the cell...
+  NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+  NSArray *highScores = [standardDefaults objectForKey:kHCDHighScoresArrayKey];
+  NSNumber *scoreObj = [highScores objectAtIndex:indexPath.row];
+  int score = [scoreObj intValue];
+  
+  NSString *cellText = [NSString stringWithFormat:@"%d", score];
+  [cell.textLabel setText:cellText];
+  
+  return cell;
 }
 
 /*
