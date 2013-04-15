@@ -8,12 +8,25 @@
 
 #import "HCDHighScoresViewController.h"
 #import "HCDViewController.h"
+#import "HCDNetworkConnection.h"
 
 @interface HCDHighScoresViewController ()
+
+@property (nonatomic, strong) NSArray *scoreNamePairs;
+
+// Fetch new scores data from the server
+- (void)fetchData;
+
+// Simple helper method to return a number from what is either an NSNumber or NSString
+// This is necessary since, depending on how the server sends the data, the JSON dictionary
+// that we get might give us a string (like "24") instead of a number.
++ (NSNumber *)forceNumberFromObject:(id)stringOrNumber;
 
 @end
 
 @implementation HCDHighScoresViewController
+
+@synthesize scoreNamePairs = _scoreNamePairs;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -28,11 +41,13 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+  [super viewDidLoad];
+  
+  // iOS 6 added a native pull-to-refresh element for tables
+#warning Add code here
+  
+  // Fetch data from the server
+  [self fetchData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -48,6 +63,23 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)fetchData
+{
+  // Fetch new data from the server, put it in self.scoreNamePairs, and reload the table
+#warning Add code here
+}
+
++ (NSNumber *)forceNumberFromObject:(id)stringOrNumber
+{
+  if ([stringOrNumber isKindOfClass:[NSNumber class]]) {
+    return stringOrNumber;
+  } else if ([stringOrNumber isKindOfClass:[NSString class]]) {
+    return [[[NSNumberFormatter alloc] init] numberFromString:stringOrNumber];
+  }
+  
+  return nil;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -58,11 +90,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  // Return the number of rows in the section.
-  NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
-  NSArray *highScores = [standardDefaults objectForKey:kHCDHighScoresArrayKey];
-  
-  return [highScores count]; // The number of elements in the high scores array in NSUserDefaults
+  return [_scoreNamePairs count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -70,18 +98,20 @@
   static NSString *CellIdentifier = @"Cell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
   if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
   }
+    
+  // The scores are in the array as NSNumbers, so we need to get the intValue from it.
+  NSDictionary *scoreNamePair = [_scoreNamePairs objectAtIndex:indexPath.row];
+  NSString *name = [scoreNamePair objectForKey:@"name"];
+  NSNumber *score = [HCDHighScoresViewController forceNumberFromObject:[scoreNamePair objectForKey:@"score"]];
   
-  // Configure the cell...
-  NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
-  NSArray *highScores = [standardDefaults objectForKey:kHCDHighScoresArrayKey];
-  NSNumber *scoreObj = [highScores objectAtIndex:indexPath.row]; // Scores are stored as NSNumbers, which are wrappers for primitive types
-  int score = [scoreObj intValue];
-  
-  NSString *cellText = [NSString stringWithFormat:@"%d", score];
+  // Set the text label of the cell
+  NSString *cellText = [NSString stringWithFormat:@"%d", [score intValue]];
   [cell.textLabel setText:cellText];
+  [cell.detailTextLabel setText:name];
   
+  // Return the cell
   return cell;
 }
 

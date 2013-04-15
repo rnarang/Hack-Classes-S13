@@ -7,8 +7,7 @@
 //
 
 #import "HCDViewController.h"
-
-NSString *const kHCDHighScoresArrayKey = @"kHCDHighScoresArrayKey";
+#import "HCDSettingsViewController.h"
 
 @interface HCDViewController ()
 
@@ -40,8 +39,8 @@ NSString *const kHCDHighScoresArrayKey = @"kHCDHighScoresArrayKey";
 // Update the score label
 - (void)updateScoreLabel:(int)score;
 
-// Update the high scores list in NSUserDefaults
-- (void)updateHighScoresWithScore:(int)score;
+// Send the high score to the server
+- (void)sendHighScore:(int)score;
 
 @end
 
@@ -126,7 +125,7 @@ NSString *const kHCDHighScoresArrayKey = @"kHCDHighScoresArrayKey";
     [_moleTimer invalidate];
     [_clockTimer invalidate];
     [_moleButton setHidden:YES];
-    [self updateHighScoresWithScore:_score];
+    [self sendHighScore:_score];
   }
 }
 
@@ -167,51 +166,22 @@ NSString *const kHCDHighScoresArrayKey = @"kHCDHighScoresArrayKey";
   [self initializeGameState];
 }
 
-- (void)updateHighScoresWithScore:(int)score
+- (void)sendHighScore:(int)score
 {
-  // Wrap the score in an object so we can store it in an array.
-  // (Primitive types can't be stored into an NSArray.)
-  NSNumber *scoreObj = [NSNumber numberWithInt:score];
+  // Get the text in the text field
+  NSString *name = [[NSUserDefaults standardUserDefaults] stringForKey:kHCDNameKey];
   
-  // NSUserDefaults is generally used for storing a small constant amount of user
-  // data (such as preferences) since it doesn't scale well with large amounts of
-  // data, but it meets our purposes for now since it's simple and we're only
-  // storing a small amount of data.
-  NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
-  
-  // Get the current high scores array
-  NSArray *highScores = [standardUserDefaults objectForKey:kHCDHighScoresArrayKey];
-  
-  if (!highScores) {
-    // If there isn't already an array of high scores, create one with this score and save it
-    // in standardUserDefaults.
-    
-    highScores = [NSArray arrayWithObject:scoreObj];
-    [standardUserDefaults setObject:highScores forKey:kHCDHighScoresArrayKey];
+  if ([name length] == 0) {
+    // If the user didn't enter anything, set the name to "Anonymous"
+    name = @"Anonymous";
   } else {
-    // If there is already an array of high scores, find a spot for this score, insert it there,
-    // and save the new array.
-    
-    // Even if you store a mutable object in standard user defaults, it comes out immutable,
-    // so to modify the list, we have to create a mutable copy, modify it as appropriate,
-    // and save it again (and it will save as an immutable copy).
-    NSMutableArray *mutableHighScores = [highScores mutableCopy];
-    for (int i = 0; i < [mutableHighScores count]; i++) {
-      // Look for a slot in this ordered high scores list to store the new score
-      NSNumber *currentScore = (NSNumber *)[mutableHighScores objectAtIndex:i];
-      if (score >= [currentScore intValue]) {
-        // Found a slot to store the new score, so insert it there and save the array.
-        [mutableHighScores insertObject:scoreObj atIndex:i];
-        [standardUserDefaults setObject:mutableHighScores forKey:kHCDHighScoresArrayKey];
-        return;
-      }
-    }
-    
-    // If we didn't find a slot in the list, it's because all the scores were higher
-    // than this one. So, add it to the end of the array and then save it.
-    [mutableHighScores addObject:scoreObj];
-    [standardUserDefaults setObject:mutableHighScores forKey:kHCDHighScoresArrayKey];
+    // We need to use percent escapes since this string, which may have spaces
+    // or other special characters, is going into a URL
+    name = [name stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
   }
+  
+  // Send the high score to the server
+#warning Add code here
 }
 
 @end

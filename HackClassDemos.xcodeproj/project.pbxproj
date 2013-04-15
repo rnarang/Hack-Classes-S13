@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B1FED1D171CBBD100CE479B /* HCDNetworkConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1FED1C171CBBD100CE479B /* HCDNetworkConnection.m */; };
 		5B327424170A68B400CAC2EA /* HCDHighScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B327422170A68B400CAC2EA /* HCDHighScoresViewController.m */; };
 		5B327425170A68B400CAC2EA /* HCDHighScoresViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B327423170A68B400CAC2EA /* HCDHighScoresViewController.xib */; };
 		5B43EE8F1713A2F20016B00B /* HCDSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B43EE8D1713A2F20016B00B /* HCDSettingsViewController.m */; };
@@ -26,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B1FED1B171CBBD100CE479B /* HCDNetworkConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCDNetworkConnection.h; sourceTree = "<group>"; };
+		5B1FED1C171CBBD100CE479B /* HCDNetworkConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCDNetworkConnection.m; sourceTree = "<group>"; };
 		5B327421170A68B400CAC2EA /* HCDHighScoresViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCDHighScoresViewController.h; sourceTree = "<group>"; };
 		5B327422170A68B400CAC2EA /* HCDHighScoresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCDHighScoresViewController.m; sourceTree = "<group>"; };
 		5B327423170A68B400CAC2EA /* HCDHighScoresViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HCDHighScoresViewController.xib; sourceTree = "<group>"; };
@@ -107,6 +110,8 @@
 				5B43EE8C1713A2F20016B00B /* HCDSettingsViewController.h */,
 				5B43EE8D1713A2F20016B00B /* HCDSettingsViewController.m */,
 				5B43EE8E1713A2F20016B00B /* HCDSettingsViewController.xib */,
+				5B1FED1B171CBBD100CE479B /* HCDNetworkConnection.h */,
+				5B1FED1C171CBBD100CE479B /* HCDNetworkConnection.m */,
 				5BC4D9C717015D8A0003D417 /* Supporting Files */,
 			);
 			path = HackClassDemos;
@@ -201,6 +206,7 @@
 				5BC4D9DA17015D8A0003D417 /* HCDViewController.m in Sources */,
 				5B327424170A68B400CAC2EA /* HCDHighScoresViewController.m in Sources */,
 				5B43EE8F1713A2F20016B00B /* HCDSettingsViewController.m in Sources */,
+				5B1FED1D171CBBD100CE479B /* HCDNetworkConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

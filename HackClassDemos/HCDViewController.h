@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-extern NSString *const kHCDHighScoresArrayKey;
-
 @interface HCDViewController : UIViewController
 
 // Connection to the score label in HCDViewController.xib
