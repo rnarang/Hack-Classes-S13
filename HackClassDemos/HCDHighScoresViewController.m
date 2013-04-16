@@ -44,7 +44,9 @@
   [super viewDidLoad];
   
   // iOS 6 added a native pull-to-refresh element for tables
-#warning Add code here
+  UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+  [refreshControl addTarget:self action:@selector(fetchData) forControlEvents:UIControlEventValueChanged];
+  self.refreshControl = refreshControl;
   
   // Fetch data from the server
   [self fetchData];
@@ -66,7 +68,30 @@
 - (void)fetchData
 {
   // Fetch new data from the server, put it in self.scoreNamePairs, and reload the table
-#warning Add code here
+  NSString *urlString = @"http://hackios.herokuapp.com/get_scores";
+  NSURL *url = [NSURL URLWithString:urlString];
+  NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+  
+  HCDNetworkConnection *networkConnection = [[HCDNetworkConnection alloc] initWithRequest:urlRequest convertResponseToJSON:YES];
+  [networkConnection begin:^(id data, NSURLResponse *response, NSError *error) {
+    NSArray *array = data;
+    NSArray *sortedScores = [array sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+      NSDictionary *scorePair1 = obj1;
+      NSDictionary *scorePair2 = obj2;
+      
+      NSNumber *firstScore = [scorePair1 objectForKey:@"score"];
+      NSNumber *secondScore = [scorePair2 objectForKey:@"score"];
+      
+      firstScore = [HCDHighScoresViewController forceNumberFromObject:firstScore];
+      secondScore = [HCDHighScoresViewController forceNumberFromObject:secondScore];
+      
+      return [secondScore compare:firstScore];
+    }];
+    
+    self.scoreNamePairs = sortedScores;
+    [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
+  }];
 }
 
 + (NSNumber *)forceNumberFromObject:(id)stringOrNumber

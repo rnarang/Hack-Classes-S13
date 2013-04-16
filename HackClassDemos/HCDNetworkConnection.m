@@ -106,7 +106,7 @@
 }
 
 #pragma mark -
-#pragma mark Network Activity Inidicator
+#pragma mark Network Activity Indicator
 
 static int liveRequestCount = 0;
 

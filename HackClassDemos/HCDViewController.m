@@ -8,6 +8,7 @@
 
 #import "HCDViewController.h"
 #import "HCDSettingsViewController.h"
+#import "HCDNetworkConnection.h"
 
 @interface HCDViewController ()
 
@@ -181,7 +182,15 @@
   }
   
   // Send the high score to the server
-#warning Add code here
+  NSString *urlString = [NSString stringWithFormat:@"http://hackios.herokuapp.com/add_score?name=%@&score=%d", name, score];
+  NSURL *url = [NSURL URLWithString:urlString];
+  NSURLRequest *request = [NSURLRequest requestWithURL:url];
+  HCDNetworkConnection *networkConnection = [[HCDNetworkConnection alloc] initWithRequest:request convertResponseToJSON:NO];
+  [networkConnection begin:^(id data, NSURLResponse *response, NSError *error) {
+    NSString *dataString = data;
+    NSLog(@"%@", dataString);
+  }];
+  
 }
 
 @end
