@@ -9,10 +9,12 @@
 #import "HCDHighScoresViewController.h"
 #import "HCDViewController.h"
 #import "HCDNetworkConnection.h"
+#import "HCDAppDelegate.h"
+#import "HCDScore.h"
 
 @interface HCDHighScoresViewController ()
 
-@property (nonatomic, strong) NSArray *scoreNamePairs;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 // Fetch new scores data from the server
 - (void)fetchData;
@@ -26,7 +28,7 @@
 
 @implementation HCDHighScoresViewController
 
-@synthesize scoreNamePairs = _scoreNamePairs;
+@synthesize fetchedResultsController = _fetchedResultsController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -48,6 +50,9 @@
   [refreshControl addTarget:self action:@selector(fetchData) forControlEvents:UIControlEventValueChanged];
   self.refreshControl = refreshControl;
   
+  /* Use a fetched results controller to display the list of scores */
+#warning Add code here
+
   // Fetch data from the server
   [self fetchData];
 }
@@ -73,25 +78,41 @@
   NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
   
   HCDNetworkConnection *networkConnection = [[HCDNetworkConnection alloc] initWithRequest:urlRequest convertResponseToJSON:YES];
-  [networkConnection begin:^(id data, NSURLResponse *response, NSError *error) {
-    NSArray *array = data;
-    NSArray *sortedScores = [array sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-      NSDictionary *scorePair1 = obj1;
-      NSDictionary *scorePair2 = obj2;
-      
-      NSNumber *firstScore = [scorePair1 objectForKey:@"score"];
-      NSNumber *secondScore = [scorePair2 objectForKey:@"score"];
-      
-      firstScore = [HCDHighScoresViewController forceNumberFromObject:firstScore];
-      secondScore = [HCDHighScoresViewController forceNumberFromObject:secondScore];
-      
-      return [secondScore compare:firstScore];
-    }];
+  
+  // Will be called by the networkConnection instance when the connection finishes loading
+  hcd_request_completion_block_t finishedBlock =
+  ^(id data, NSURLResponse *response, NSError *error) {
+    if (error) {
+      [self.refreshControl endRefreshing];
+      return;
+    }
     
-    self.scoreNamePairs = sortedScores;
-    [self.tableView reloadData];
+    assert([data isKindOfClass:[NSArray class]]);
+    
+    HCDAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *context = [appDelegate managedObjectContext];
+    
+    // Delete all the scores currently in core data in order to update it with the new scores.
+    // This is a simple brute-force way of doing it, but its sufficient for our goals.
+    [HCDHighScoresViewController deleteAllScores:context];
+    
+    for (NSDictionary *scoreNamePair in data) {
+      HCDScore *score = [NSEntityDescription insertNewObjectForEntityForName:@"HCDScore"
+                                                      inManagedObjectContext:context];
+      score.name = [scoreNamePair objectForKey:@"name"];
+      score.scoreValue = [HCDHighScoresViewController forceNumberFromObject:[scoreNamePair objectForKey:@"score"]];
+    }
+    
+    // We really should do some error checking here, but let's just trust that it works.
+    // (why we're passing in NULL instead of some error object pointer).
+    [context save:NULL]; // Save the updated changes to update on disk
+    [self.fetchedResultsController performFetch:NULL]; // Have the fetched results controller update
+    [self.tableView reloadData]; // Make the table reload data by calling the delegate/data source methods again.
+    
     [self.refreshControl endRefreshing];
-  }];
+  };
+  
+  [networkConnection begin:finishedBlock];
 }
 
 + (NSNumber *)forceNumberFromObject:(id)stringOrNumber
@@ -105,36 +126,49 @@
   return nil;
 }
 
++ (void)deleteAllScores:(NSManagedObjectContext *)context
+{
+  NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+  NSEntityDescription *entity = [NSEntityDescription entityForName:@"HCDScore" inManagedObjectContext:context];
+  [fetchRequest setEntity:entity];
+  
+  NSError *error = nil;
+  NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+  if (fetchedObjects == nil) {
+    NSLog(@"Core data fetch failure: %@", error);
+  }
+  
+  for (HCDScore *score in fetchedObjects) {
+    [context deleteObject:score];
+  }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
-    return 1;
+#warning Add code here
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [_scoreNamePairs count];
+#warning Add code here
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   static NSString *CellIdentifier = @"Cell";
+  
+  // Cells are reused once they go off the screen. In other words, if you have a friends table
+  // with 1000 friends, but you can only see about 10 friends on the screen at once, chances are
+  // there are 11 or 12 cells allocated in memory.
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
   if (cell == nil) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
   }
-    
-  // The scores are in the array as NSNumbers, so we need to get the intValue from it.
-  NSDictionary *scoreNamePair = [_scoreNamePairs objectAtIndex:indexPath.row];
-  NSString *name = [scoreNamePair objectForKey:@"name"];
-  NSNumber *score = [HCDHighScoresViewController forceNumberFromObject:[scoreNamePair objectForKey:@"score"]];
   
-  // Set the text label of the cell
-  NSString *cellText = [NSString stringWithFormat:@"%d", [score intValue]];
-  [cell.textLabel setText:cellText];
-  [cell.detailTextLabel setText:name];
+  // Customize the cell
+#warning Add code here
   
   // Return the cell
   return cell;

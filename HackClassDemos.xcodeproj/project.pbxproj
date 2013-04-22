@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5B1FED1D171CBBD100CE479B /* HCDNetworkConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1FED1C171CBBD100CE479B /* HCDNetworkConnection.m */; };
+		5B231BAC1725F9F40044ACDE /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B231BAA1725F9E90044ACDE /* CoreData.framework */; };
+		5B231BAF1725FA990044ACDE /* HCDDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5B231BAD1725FA990044ACDE /* HCDDataModel.xcdatamodeld */; };
+		5B231BB21725FACB0044ACDE /* HCDScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B231BB11725FACB0044ACDE /* HCDScore.m */; };
 		5B327424170A68B400CAC2EA /* HCDHighScoresViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B327422170A68B400CAC2EA /* HCDHighScoresViewController.m */; };
 		5B327425170A68B400CAC2EA /* HCDHighScoresViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B327423170A68B400CAC2EA /* HCDHighScoresViewController.xib */; };
 		5B43EE8F1713A2F20016B00B /* HCDSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B43EE8D1713A2F20016B00B /* HCDSettingsViewController.m */; };
@@ -29,6 +32,10 @@
 /* Begin PBXFileReference section */
 		5B1FED1B171CBBD100CE479B /* HCDNetworkConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCDNetworkConnection.h; sourceTree = "<group>"; };
 		5B1FED1C171CBBD100CE479B /* HCDNetworkConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCDNetworkConnection.m; sourceTree = "<group>"; };
+		5B231BAA1725F9E90044ACDE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		5B231BAE1725FA990044ACDE /* HCDDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HCDDataModel.xcdatamodel; sourceTree = "<group>"; };
+		5B231BB01725FACB0044ACDE /* HCDScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCDScore.h; sourceTree = "<group>"; };
+		5B231BB11725FACB0044ACDE /* HCDScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCDScore.m; sourceTree = "<group>"; };
 		5B327421170A68B400CAC2EA /* HCDHighScoresViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCDHighScoresViewController.h; sourceTree = "<group>"; };
 		5B327422170A68B400CAC2EA /* HCDHighScoresViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCDHighScoresViewController.m; sourceTree = "<group>"; };
 		5B327423170A68B400CAC2EA /* HCDHighScoresViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HCDHighScoresViewController.xib; sourceTree = "<group>"; };
@@ -61,6 +68,7 @@
 			files = (
 				5BC4D9C117015D8A0003D417 /* UIKit.framework in Frameworks */,
 				5BC4D9C317015D8A0003D417 /* Foundation.framework in Frameworks */,
+				5B231BAC1725F9F40044ACDE /* CoreData.framework in Frameworks */,
 				5BC4D9C517015D8A0003D417 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -88,6 +96,7 @@
 		5BC4D9BF17015D8A0003D417 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5B231BAA1725F9E90044ACDE /* CoreData.framework */,
 				5BC4D9C017015D8A0003D417 /* UIKit.framework */,
 				5BC4D9C217015D8A0003D417 /* Foundation.framework */,
 				5BC4D9C417015D8A0003D417 /* CoreGraphics.framework */,
@@ -112,6 +121,9 @@
 				5B43EE8E1713A2F20016B00B /* HCDSettingsViewController.xib */,
 				5B1FED1B171CBBD100CE479B /* HCDNetworkConnection.h */,
 				5B1FED1C171CBBD100CE479B /* HCDNetworkConnection.m */,
+				5B231BAD1725FA990044ACDE /* HCDDataModel.xcdatamodeld */,
+				5B231BB01725FACB0044ACDE /* HCDScore.h */,
+				5B231BB11725FACB0044ACDE /* HCDScore.m */,
 				5BC4D9C717015D8A0003D417 /* Supporting Files */,
 			);
 			path = HackClassDemos;
@@ -207,6 +219,8 @@
 				5B327424170A68B400CAC2EA /* HCDHighScoresViewController.m in Sources */,
 				5B43EE8F1713A2F20016B00B /* HCDSettingsViewController.m in Sources */,
 				5B1FED1D171CBBD100CE479B /* HCDNetworkConnection.m in Sources */,
+				5B231BAF1725FA990044ACDE /* HCDDataModel.xcdatamodeld in Sources */,
+				5B231BB21725FACB0044ACDE /* HCDScore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +346,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		5B231BAD1725FA990044ACDE /* HCDDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5B231BAE1725FA990044ACDE /* HCDDataModel.xcdatamodel */,
+			);
+			currentVersion = 5B231BAE1725FA990044ACDE /* HCDDataModel.xcdatamodel */;
+			path = HCDDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 5BC4D9B517015D8A0003D417 /* Project object */;
 }
